@@ -528,24 +528,24 @@
         },
 
         {
-          id: 50,
-          name: "Combo Batata Calabresa + Coca-Cola Lata",
+          id: 55,
+          name: "Combo Casal Strogonoff + 2 Coca-Cola 250ml",
           category: "Combos",
           description:
-            "Sua batata recheada de calabresa favorita acompanhada de uma Coca-Cola lata 350ml gelada.",
-          price: 31.9,
+            "Uma batata de strogonoff de carne e uma de frango, acompanhadas por duas Coca-Cola 250ml geladas. Perfeito para dividir!",
+          price: 75.0,
           image:
-            "https://i.ibb.co/HLZcJrsT/Chat-GPT-Image-18-de-out-de-2025-00-16-23.png",
+            "https://i.ibb.co/7NB8R6Vk/Chat-GPT-Image-18-de-out-de-2025-00-47-11.png",
         },
         {
-          id: 51,
-          name: "Combo Batata Strogonoff de Frango + Coca-Cola Lata",
+          id: 56,
+          name: "Super Combo Família",
           category: "Combos",
           description:
-            "A combinação perfeita da nossa batata de strogonoff de frango com uma Coca-Cola lata 350ml.",
-          price: 37.9,
+            "2 Batatas Strogonoff (1 de Frango, 1 de Carne), 2 Batatas (1 de Calabresa, 1 de Bacon) + Coca-Cola 1.5L.",
+          price: 120.0,
           image:
-            "https://i.ibb.co/8D5PmwKh/Chat-GPT-Image-18-de-out-de-2025-10-13-42.png",
+            "https://i.ibb.co/tM5sVB8r/Chat-GPT-Image-18-de-out-de-2025-01-01-55.png",
         },
 
         {
@@ -836,19 +836,20 @@
                 }</p>
                 
                 <div class="p-3 pt-0 mt-auto">
-                  <div class="flex justify-between items-center mb-2">
-                    <div class="flex items-baseline">
-                      <span class="text-md font-bold text-white mr-1">R$</span>
-                      <span class="text-xl sm:text-2xl font-bold text-green-400">${item.price
-                        .toFixed(2)
-                        .replace(".", ",")}</span>
-                    </div>
-                    <button
-                      data-id="${item.id}"
-                      class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-3 sm:px-4 rounded-lg text-sm transition-colors duration-300 shadow-md"
-                    >
-                      Adicionar
-                    </button>
+                  <div class="flex flex-col gap-2">
+                      <div class="flex items-baseline self-center">
+                          <span class="text-md font-bold text-white mr-1">R$</span>
+                          <span class="text-xl sm:text-2xl font-bold text-green-400">${item.price
+                            .toFixed(2)
+                            .replace(".", ",")}</span>
+                      </div>
+                      <button
+                          data-id="${item.id}"
+                          class="add-to-cart-btn bg-green-600 hover:bg-green-700 w-full text-white font-bold py-2 px-3 sm:px-4 rounded-lg text-sm transition-colors duration-300 shadow-md flex items-center justify-center gap-2"
+                      >
+                          <img src="https://i.ibb.co/sXKCwKs/3536445.png" alt="WhatsApp Icon" class="w-5 h-5">
+                          Pedir agora
+                      </button>
                   </div>
                 </div>
               `;

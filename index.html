@@ -105,6 +105,10 @@
         color: #121212; /* Preto */
         border-color: #fdd835;
       }
+      /* Garantir que o modal apareça na frente de tudo */
+      #checkout-modal {
+        z-index: 100;
+      }
     </style>
   </head>
   <body class="bg-purple-900 text-white">
@@ -232,7 +236,7 @@
       class="modal-overlay fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 hidden opacity-0"
     >
       <div
-        class="modal-content bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-md transform scale-95 border-t-4 border-red-600"
+        class="modal-content bg-gray-800 rounded-xl shadow-2xl p-6 w-full max-w-md transform scale-95 border-t-4 border-red-600 max-h-[90vh] overflow-y-auto"
       >
         <h2 class="font-anton text-3xl text-yellow-400 mb-4">Quase lá!</h2>
         <p class="text-gray-300 mb-6">
@@ -831,7 +835,17 @@
                 .querySelector(".add-to-cart-btn")
                 .addEventListener("click", (e) => {
                   e.stopPropagation(); // Impede que o clique no botão acione o toggle da descrição
+                  
+                  const wasCartClosed = !isCartOpen;
+                  const isFirstItem = cart.length === 0;
+
                   addToCart(item.id);
+
+                  // Se for o primeiro item e o carrinho estava fechado, abre.
+                  if (isFirstItem && wasCartClosed) {
+                    toggleCart();
+                  }
+
                   showNotification();
                 });
 
@@ -909,9 +923,7 @@
             });
           }
 
-          cartTotalElement.innerText = `R$ ${total
-            .toFixed(2)
-            .replace(".", ",")}`;
+          cartTotalElement.innerText = `R$ ${total.toFixed(2).replace(".", ",")}`;
           cartCountElement.innerText = count;
 
           // Atualiza também o sumário do modal
@@ -1021,9 +1033,7 @@
             modal.classList.remove("hidden");
             setTimeout(() => {
               modal.classList.remove("opacity-0");
-              modal
-                .querySelector(".modal-content")
-                .classList.remove("scale-95");
+              modal.querySelector(".modal-content").classList.remove("scale-95");
             }, 10);
           } else {
             modal.classList.add("opacity-0");
@@ -1035,6 +1045,9 @@
         }
 
         function generateWhatsAppMessage() {
+          // --- INÍCIO DA ALTERAÇÃO ---
+          // Agora, a mensagem é formatada como uma "Comanda" para o restaurante
+
           const name = document.getElementById("customer-name").value;
           const deliveryOption = document.querySelector(
             'input[name="delivery_option"]:checked'
@@ -1043,45 +1056,62 @@
             'input[name="payment_option"]:checked'
           ).value;
 
-          let message = `👋 Olá, *LA CASA BOX & SHAKES*!\n\n`;
-          message += `Meu nome é *${name}* e gostaria de fazer o seguinte pedido:\n\n`;
-          message += `*📝 RESUMO DO PEDIDO:*\n`;
+          const isDelivery = deliveryOption === "delivery";
 
-          cart.forEach((item) => {
-            message += `▪️ ${item.quantity}x ${item.name} - ${formatCurrency(
-              item.price * item.quantity
-            )}\n`;
+          // Adiciona data e hora
+          const now = new Date();
+          const timestamp = now.toLocaleString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
           });
 
-          message += `\n----------------------------------\n`;
-          const subtotal = getCartSubtotal();
-          const isDelivery = deliveryOption === "delivery";
-          const currentDeliveryFee = isDelivery ? deliveryFee : 0;
-          const total = subtotal + currentDeliveryFee;
+          // --- CABEÇALHO DA COMANDA ---
+          let message = `======= *NOVO PEDIDO* =======\n`;
+          message += `*LA CASA BOX & SHAKES*\n`;
+          message += `*Data/Hora:* ${timestamp}\n\n`;
 
-          message += `*Subtotal:* ${formatCurrency(subtotal)}\n`;
-          if (isDelivery) {
-            message += `*Taxa de Entrega:* ${formatCurrency(
-              currentDeliveryFee
-            )}\n`;
-          }
-          message += `*Total a Pagar:* *${formatCurrency(total)}*\n`;
-          message += `----------------------------------\n\n`;
+          // --- DADOS DO CLIENTE ---
+          message += `*CLIENTE:* ${name}\n\n`;
 
-          message += `*ℹ️ DADOS PARA ENTREGA:*\n`;
-          message += `*Forma de Pagamento:* ${paymentOption}\n`;
-
+          // --- DADOS DE ENTREGA ---
           if (isDelivery) {
             const street = document.getElementById("customer-street").value;
             const number = document.getElementById("customer-number").value;
-            message += `*Tipo:* Delivery\n`;
-            message += `*Endereço:* ${street}, Nº ${number}\n`;
+            message += `*TIPO:* 🚀 Delivery\n`;
+            message += `*ENDEREÇO:* ${street}, Nº ${number}\n`;
           } else {
-            message += `*Tipo:* Retirada no Local\n`;
-            message += `(Endereço: Av. Lourival Barbosa, 68 - Olímpico)\n`;
+            message += `*TIPO:* 🛍️ Retirada no Local\n`;
+            message += `(Av. Lourival Barbosa, 68 - Olímpico)\n`;
           }
+          message += `----------------------------------\n`;
 
-          message += `\nAguardo a confirmação do meu pedido! 😊`;
+          // --- ITENS DO PEDIDO ---
+          message += `*ITENS DO PEDIDO:*\n\n`;
+          cart.forEach((item) => {
+            message += `▪️ *${item.quantity}x ${item.name}*\n`;
+            message += `  (Valor: ${formatCurrency(
+              item.price * item.quantity
+            )})\n\n`;
+          });
+          message += `----------------------------------\n`;
+
+          // --- TOTAIS E PAGAMENTO ---
+          const subtotal = getCartSubtotal();
+          const currentDeliveryFee = isDelivery ? deliveryFee : 0;
+          const total = subtotal + currentDeliveryFee;
+
+          message += `*PAGAMENTO:* ${paymentOption}\n\n`;
+
+          message += `Subtotal: ${formatCurrency(subtotal)}\n`;
+          if (isDelivery) {
+            message += `Taxa de Entrega: ${formatCurrency(currentDeliveryFee)}\n`;
+          }
+          message += `*TOTAL A PAGAR: ${formatCurrency(total)}*\n`;
+          message += `==========================`;
+          
+          // --- FIM DA ALTERAÇÃO ---
 
           return encodeURIComponent(message);
         }
@@ -1154,9 +1184,8 @@
           formError.classList.add("hidden");
 
           // Validação dos campos 'required'
-          const inputs = checkoutForm.querySelectorAll(
-            "input[required]:not(:disabled)"
-          );
+          const inputs =
+            checkoutForm.querySelectorAll("input[required]:not(:disabled)");
           let isValid = true;
           inputs.forEach((input) => {
             if (!input.value.trim()) {

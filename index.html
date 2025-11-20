@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -40,29 +41,16 @@
       }
       main {
         flex-grow: 1;
-        padding-bottom: 140px; /* Espaço para o carrinho não cobrir o rodapé */
+        padding-bottom: 140px; /* Espaço extra para o carrinho não cobrir o último item */
       }
-      .font-anton {
-        font-family: "Anton", sans-serif;
-      }
-      .font-dancing {
-        font-family: "Dancing Script", cursive;
-      }
-
+      .font-anton { font-family: "Anton", sans-serif; }
+      .font-dancing { font-family: "Dancing Script", cursive; }
+      
       /* Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #232323;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #e53935;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #fdd835;
-      }
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #232323; }
+      ::-webkit-scrollbar-thumb { background: #e53935; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #fdd835; }
 
       /* Carrinho Bottom Sheet */
       #cart-container {
@@ -75,100 +63,56 @@
       .cart-hidden {
         transform: translateY(100%);
       }
-      /* Quando minimizado, escondemos o corpo */
+      /* Quando minimizado, escondemos o corpo (wrapper) */
       .cart-minimized .cart-body-wrapper {
         display: none;
       }
 
       /* Animações */
       @keyframes pulse-animation {
-        0%,
-        100% {
-          transform: scale(1);
-          box-shadow: 0 0 10px rgba(253, 216, 53, 0.4);
-        }
-        50% {
-          transform: scale(1.02);
-          box-shadow: 0 0 20px rgba(253, 216, 53, 0.8);
-        }
+        0%, 100% { transform: scale(1); box-shadow: 0 0 10px rgba(253, 216, 53, 0.4); }
+        50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(253, 216, 53, 0.8); }
       }
-      .spinner-banner {
-        animation: pulse-animation 2.5s infinite;
-      }
+      .spinner-banner { animation: pulse-animation 2.5s infinite; }
 
-      /* Glow do banner compacto */
+      /* Animação de Pulso Sutil para o Banner Compacto */
       @keyframes gentle-pulse {
-        0%,
-        100% {
-          opacity: 0.6;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.9;
-          transform: scale(1.03);
-        }
+        0%, 100% { opacity: 0.5; transform: scale(1); }
+        50% { opacity: 0.8; transform: scale(1.02); }
       }
       .banner-glow {
         animation: gentle-pulse 3s infinite ease-in-out;
       }
 
       /* Modais */
-      #spinner-modal,
-      #prizeModal,
-      #checkout-modal {
-        z-index: 1000;
-      }
-
-      /* Modal Overlay */
-      .modal-overlay {
-        transition: opacity 0.3s ease-out;
-      }
-      .modal-overlay.hidden {
-        display: none;
-      }
-      .modal-overlay.opacity-0 {
-        opacity: 0;
-        pointer-events: none;
-      }
-
+      #spinner-modal, #prizeModal, #checkout-modal { z-index: 1000; }
+      
+      /* Modal Overlay transition */
+      .modal-overlay { transition: opacity 0.3s ease-out; }
+      .modal-overlay.hidden { display: none; }
+      .modal-overlay.opacity-0 { opacity: 0; pointer-events: none; }
+      
       /* Roleta Canvas */
-      .wheel-container {
-        position: relative;
-        width: 300px;
-        height: 300px;
-        margin: 20px auto;
-      }
-      #wheelCanvas {
-        width: 100%;
-        height: 100%;
-        filter: drop-shadow(0 0 15px rgba(253, 216, 53, 0.5));
-      }
+      .wheel-container { position: relative; width: 300px; height: 300px; margin: 20px auto; }
+      #wheelCanvas { width: 100%; height: 100%; filter: drop-shadow(0 0 15px rgba(253, 216, 53, 0.5)); }
       .wheel-pointer {
-        position: absolute;
-        top: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 0;
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-top: 30px solid #dc2626;
+        position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+        width: 0; height: 0;
+        border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 30px solid #dc2626;
         z-index: 10;
       }
-
-      /* ESTILO CUPOM */
+      
+      /* ESTILO CUPOM PROFISSIONAL */
       .modal-content-prize {
-        background-color: transparent;
+        background-color: transparent; 
         box-shadow: none;
         border: none;
         transform: scale(0.95);
         transition: transform 0.3s ease-out;
       }
-      .modal-content-prize.show {
-        transform: scale(1);
-      }
+      .modal-content-prize.show { transform: scale(1); }
 
-      /* Inputs Checkout */
+      /* Inputs do Checkout com foco amarelo */
       .checkout-input:focus {
         border-color: #facc15;
         box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.2);
@@ -176,16 +120,13 @@
     </style>
   </head>
   <body class="bg-purple-900 text-white">
+    
     <!-- Cabeçalho -->
     <header class="py-6 md:py-10 bg-black shadow-xl">
       <div class="container mx-auto text-center px-4">
-        <h1
-          class="font-anton text-3xl sm:text-5xl md:text-7xl tracking-wider flex items-center flex-wrap justify-center gap-x-2 sm:gap-x-3 gap-y-2"
-        >
+        <h1 class="font-anton text-3xl sm:text-5xl md:text-7xl tracking-wider flex items-center flex-wrap justify-center gap-x-2 sm:gap-x-3 gap-y-2">
           <span class="text-red-600">LA CASA</span>
-          <span class="bg-white text-red-600 px-3 py-1 rounded-md leading-none"
-            >BOX</span
-          >
+          <span class="bg-white text-red-600 px-3 py-1 rounded-md leading-none">BOX</span>
           <span class="text-purple-500">& SHAKES</span>
         </h1>
         <p class="font-dancing text-white text-xl sm:text-2xl md:text-3xl mt-4">
@@ -196,1050 +137,775 @@
 
     <!-- Conteúdo Principal -->
     <main class="container mx-auto px-4">
-      <!-- Banner Roleta Compacto -->
+      
+      <!-- BANNER DA ROLETA PREMIUM (Horizontal & Compacto) -->
       <div
         id="open-spinner-banner"
         class="group relative w-full max-w-md mx-auto my-6 cursor-pointer transform transition-all duration-300 active:scale-95"
       >
+        <!-- Glow Pulsante -->
         <div
-          class="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-600 rounded-full blur opacity-60 banner-glow"
+          class="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-purple-600 rounded-2xl blur opacity-60 banner-glow"
         ></div>
+
+        <!-- Card do Banner -->
         <div
-          class="relative bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 rounded-full p-2 pr-4 flex items-center justify-between shadow-xl border-2 border-yellow-200 overflow-hidden"
+          class="relative bg-gradient-to-r from-yellow-300 via-yellow-400 to-orange-400 rounded-2xl p-3 pl-5 pr-2 flex items-center justify-between shadow-2xl border-2 border-yellow-100 overflow-hidden"
         >
-          <div class="flex-1 pl-3 flex flex-col justify-center">
-            <h2
-              class="font-anton text-2xl sm:text-3xl text-purple-900 leading-none drop-shadow-sm tracking-wide"
-            >
-              GIRE A ROLETA
-            </h2>
-            <div class="flex items-center gap-1 mt-0.5">
-              <span
-                class="text-xs font-black text-red-700 uppercase tracking-wider bg-white/30 px-1.5 rounded-sm"
-                >Grátis</span
-              >
-              <p
-                class="text-xs sm:text-sm font-bold text-red-800 uppercase tracking-wider"
-              >
-                E GANHE DESCONTO 🎁
-              </p>
-            </div>
+          <!-- Texto e Badges -->
+          <div class="flex-1 z-10 flex flex-col justify-center mr-2">
+             <!-- Badges -->
+             <div class="flex items-center gap-2 mb-1">
+               <span class="bg-purple-900 text-white text-[10px] font-black px-2 py-0.5 rounded shadow-sm uppercase tracking-wider transform -skew-x-12">Novo!</span>
+               <span class="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded shadow-sm uppercase tracking-wider transform -skew-x-12">Exclusivo</span>
+             </div>
+             
+             <!-- Título Principal -->
+             <h2 class="font-anton text-3xl text-purple-900 leading-none drop-shadow-sm tracking-normal">
+               GIRE A ROLETA
+             </h2>
+             
+             <!-- Subtítulo com Ícone -->
+             <div class="flex items-center gap-1.5 mt-0.5">
+                <span class="text-xl filter drop-shadow-sm">🎟️</span>
+                <p class="text-sm font-bold text-red-800 uppercase tracking-wide leading-tight">
+                  E GANHE DESCONTO
+                </p>
+             </div>
           </div>
-          <div
-            class="relative w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 bg-white/10 rounded-full p-1 backdrop-blur-sm border border-white/20"
-          >
-            <svg
-              class="w-full h-full drop-shadow-md animate-[spin_8s_linear_infinite] group-hover:animate-[spin_2s_linear_infinite]"
-              viewBox="0 0 100 100"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
-                cx="50"
-                cy="50"
-                r="48"
-                fill="#121212"
-                stroke="#FACC15"
-                stroke-width="2"
-              />
-              <path d="M50 50 L50 5 A45 45 0 0 1 92 35 Z" fill="#DC2626" />
-              <path d="M50 50 L92 35 A45 45 0 0 1 78 88 Z" fill="#581C87" />
-              <path d="M50 50 L78 88 A45 45 0 0 1 22 88 Z" fill="#FACC15" />
-              <path d="M50 50 L22 88 A45 45 0 0 1 8 35 Z" fill="#2563EB" />
-              <path d="M50 50 L8 35 A45 45 0 0 1 50 5 Z" fill="#10B981" />
-              <circle
-                cx="50"
-                cy="50"
-                r="12"
-                fill="#FACC15"
-                stroke="#121212"
-                stroke-width="2"
-              />
-              <circle cx="50" cy="50" r="4" fill="#FFFFFF" />
-            </svg>
-            <div
-              class="absolute -top-1.5 left-1/2 -translate-x-1/2 z-30 filter drop-shadow-sm"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#DC2626">
-                <path
-                  d="M12 22L5 8H19L12 22Z"
-                  stroke="white"
-                  stroke-width="2"
-                />
-              </svg>
-            </div>
+
+          <!-- Ícone da Roleta (Direita) -->
+          <div class="relative w-16 h-16 flex-shrink-0 bg-white/20 rounded-full p-1 backdrop-blur-sm border border-white/30 shadow-inner">
+             <!-- SVG Animado -->
+             <svg class="w-full h-full drop-shadow-lg animate-[spin_10s_linear_infinite] group-hover:animate-[spin_2s_linear_infinite]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Borda Externa -->
+              <circle cx="50" cy="50" r="48" fill="#121212" stroke="#FACC15" stroke-width="3"/>
+              <!-- Segmentos -->
+              <path d="M50 50 L50 5 A45 45 0 0 1 92 35 Z" fill="#DC2626"/>
+              <path d="M50 50 L92 35 A45 45 0 0 1 78 88 Z" fill="#581C87"/>
+              <path d="M50 50 L78 88 A45 45 0 0 1 22 88 Z" fill="#FACC15"/>
+              <path d="M50 50 L22 88 A45 45 0 0 1 8 35 Z" fill="#2563EB"/>
+              <path d="M50 50 L8 35 A45 45 0 0 1 50 5 Z" fill="#10B981"/>
+              <!-- Centro -->
+              <circle cx="50" cy="50" r="14" fill="#FACC15" stroke="#121212" stroke-width="2"/>
+              <circle cx="50" cy="50" r="6" fill="#FFFFFF"/>
+             </svg>
+             <!-- Ponteiro -->
+             <div class="absolute -top-2 left-1/2 -translate-x-1/2 z-20 filter drop-shadow-md">
+               <svg width="20" height="20" viewBox="0 0 24 24" fill="#DC2626">
+                 <path d="M12 22L5 8H19L12 22Z" stroke="white" stroke-width="2"/>
+               </svg>
+             </div>
           </div>
+          
         </div>
       </div>
 
-      <!-- Menu Grid -->
-      <div
-        id="menu"
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-      >
+      <!-- Menu -->
+      <div id="menu" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <!-- JS vai preencher aqui -->
       </div>
     </main>
 
-    <!-- Rodapé -->
+    <!-- RODAPÉ DA PÁGINA -->
     <footer class="bg-black text-white py-8 shadow-inner mt-10 pb-32">
       <div class="container mx-auto px-4 text-center text-gray-400">
         <h3 class="font-anton text-2xl text-white mb-4">Nossa Qualidade</h3>
         <div class="max-w-3xl mx-auto text-sm space-y-3">
-          <p>
-            <span class="font-bold text-purple-400">Açaí Premium:</span>
-            <span class="font-semibold text-white">Polpa Norte</span>.
-          </p>
-          <p>
-            <span class="font-bold text-yellow-400"
-              >Batata Recheada Florão:</span
-            >
-            A melhor do mercado.
-          </p>
+          <p><span class="font-bold text-purple-400">Açaí Premium:</span> <span class="font-semibold text-white">Polpa Norte</span>.</p>
+          <p><span class="font-bold text-yellow-400">Batata Recheada Florão:</span> A melhor do mercado.</p>
         </div>
-        <div class="mt-6 border-t border-gray-700 pt-4 hidden">
-          <!-- Escondido para ficar mais compacto -->
+        <div class="mt-6 border-t border-gray-700 pt-4 hidden"> <!-- Escondido para ficar mais compacto -->
           <p class="text-xs">LA CASA BOX & SHAKES</p>
         </div>
       </div>
     </footer>
 
-    <!-- Carrinho Fixo -->
-    <div
-      id="cart-container"
-      class="fixed bottom-0 left-0 right-0 w-full bg-black text-white rounded-t-2xl shadow-2xl border-t-4 border-yellow-400 z-50 cart-hidden transition-transform duration-300"
-    >
-      <!-- Cabeçalho -->
-      <div
-        id="cart-header-area"
-        class="flex justify-between items-center p-4 bg-gradient-to-r from-red-600 to-red-700 cursor-pointer hover:from-red-700 hover:to-red-800 transition-colors rounded-t-2xl"
-      >
+    <!-- --- CARRINHO FIXO EM BAIXO (Simplificado) --- -->
+    <div id="cart-container" class="fixed bottom-0 left-0 right-0 w-full bg-black text-white rounded-t-2xl shadow-2xl border-t-4 border-yellow-400 z-50 cart-hidden transition-transform duration-300">
+      
+      <!-- CABEÇALHO DO CARRINHO -->
+      <div id="cart-header-area" class="flex justify-between items-center p-4 bg-gradient-to-r from-red-600 to-red-700 cursor-pointer hover:from-red-700 hover:to-red-800 transition-colors rounded-t-2xl">
         <div class="flex items-center gap-3">
           <span class="text-xl font-bold font-anton">🛒 SEU PEDIDO</span>
-          <span
-            id="cart-count"
-            class="bg-yellow-400 text-black font-bold px-3 py-1 rounded-full text-sm font-anton"
-            >0</span
-          >
+          <span id="cart-count" class="bg-yellow-400 text-black font-bold px-3 py-1 rounded-full text-sm font-anton">0</span>
         </div>
         <div class="flex items-center gap-3">
-          <span id="cart-total" class="font-bold text-xl font-anton"
-            >R$ 0,00</span
-          >
-          <svg
-            id="cart-arrow"
-            class="w-6 h-6 transition-transform duration-300"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            ></path>
+          <span id="cart-total" class="font-bold text-xl font-anton">R$ 0,00</span>
+          <svg id="cart-arrow" class="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
           </svg>
         </div>
       </div>
-      <!-- Corpo -->
+
+      <!-- WRAPPER DO CONTEÚDO (Para esconder/mostrar ao clicar) -->
       <div class="cart-body-wrapper">
+        
         <div class="max-h-64 overflow-y-auto bg-black border-b border-gray-800">
+          
+          <!-- MENSAGEM VAZIO -->
           <div id="empty-cart-message" class="p-8 text-center text-gray-400">
             <p class="text-lg font-semibold">🛒 Seu carrinho está vazio</p>
             <p class="text-sm mt-2">Adicione itens para começar seu pedido!</p>
           </div>
+
+          <!-- ITENS -->
           <div id="cart-items" class="hidden p-2 space-y-2"></div>
-          <div
-            id="cart-prize-display"
-            class="hidden border-t border-yellow-400 p-3 bg-gray-900 text-center"
-          >
-            <span class="text-green-400 font-bold text-sm font-anton"
-              >🎁 CUPOM ATIVO:</span
-            >
-            <span
-              id="active-prize-text"
-              class="text-white font-bold ml-2"
-            ></span>
+
+          <!-- Display Simples de Prêmio no Carrinho -->
+          <div id="cart-prize-display" class="hidden border-t border-yellow-400 p-3 bg-gray-900 text-center">
+            <span class="text-green-400 font-bold text-sm font-anton">🎁 CUPOM ATIVO:</span>
+            <span id="active-prize-text" class="text-white font-bold ml-2"></span>
           </div>
         </div>
+
+        <!-- RODAPÉ SIMPLES DO CARRINHO -->
         <div id="cart-footer" class="hidden p-4 bg-gray-900">
-          <button
-            id="btn-open-checkout"
-            class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg transition-colors shadow-lg font-anton text-xl tracking-wide flex justify-center items-center gap-2"
-          >
-            FINALIZAR COMPRA ➡️
+          <button id="btn-open-checkout" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-lg transition-colors shadow-lg font-anton text-xl tracking-wide flex justify-center items-center gap-2">
+             FINALIZAR COMPRA ➡️
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Modal Cupom -->
-    <div
-      id="prizeModal"
-      class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 z-[1000]"
-    >
-      <div
-        class="bg-black border-4 border-dashed border-yellow-400 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 modal-content-prize relative"
-      >
-        <div
-          class="bg-black border-b-4 border-yellow-400 px-6 py-4 text-center"
-        >
-          <h2
-            class="font-anton text-3xl sm:text-4xl text-yellow-400 tracking-wider drop-shadow-md"
-          >
+    <!-- --- NOVO MODAL DE PRÊMIO (ESTILO CUPOM) --- -->
+    <div id="prizeModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 z-[1000]">
+      <!-- Container com Borda Tracejada e Fundo Preto -->
+      <div class="bg-black border-4 border-dashed border-yellow-400 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 modal-content-prize relative">
+        
+        <!-- CABEÇALHO DO CUPOM -->
+        <div class="bg-black border-b-4 border-yellow-400 px-6 py-4 text-center">
+          <h2 class="font-anton text-3xl sm:text-4xl text-yellow-400 tracking-wider drop-shadow-md">
             LA CASA BOX & SHAKES
           </h2>
         </div>
-        <div
-          class="bg-gradient-to-b from-gray-900 to-black px-6 py-8 text-center space-y-4"
-        >
+
+        <!-- CORPO DO CUPOM -->
+        <div class="bg-gradient-to-b from-gray-900 to-black px-6 py-8 text-center space-y-4">
           <p class="text-white text-lg font-semibold">Parabéns! Você ganhou:</p>
-          <div
-            class="bg-gradient-to-r from-green-600 to-green-500 rounded-xl p-4 shadow-lg border-2 border-green-400 transform rotate-1"
-          >
-            <h3
-              id="prizeText"
-              class="font-anton text-5xl text-white drop-shadow-md"
-            >
+          
+          <!-- CAIXA DO PRÊMIO -->
+          <div class="bg-gradient-to-r from-green-600 to-green-500 rounded-xl p-4 shadow-lg border-2 border-green-400 transform rotate-1">
+            <h3 id="prizeText" class="font-anton text-5xl text-white drop-shadow-md">
               R$ 5 OFF
             </h3>
           </div>
         </div>
-        <div
-          class="bg-red-600 text-white text-center py-2 px-4 border-t-4 border-yellow-400"
-        >
+
+        <!-- RODAPÉ DO CUPOM (FAIXA VERMELHA) -->
+        <div class="bg-red-600 text-white text-center py-2 px-4 border-t-4 border-yellow-400">
           <p class="font-bold text-sm tracking-wide uppercase">
             ✓ VÁLIDO PARA ESTE PEDIDO
           </p>
         </div>
+
+        <!-- BOTÃO DE AÇÃO -->
         <div class="bg-black px-6 py-4">
-          <button
-            id="closeModal"
-            class="w-full bg-yellow-400 hover:bg-yellow-300 text-black font-anton text-xl font-bold py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-          >
+          <button id="closeModal" class="w-full bg-yellow-400 hover:bg-yellow-300 text-black font-anton text-xl font-bold py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]">
             USAR PRÊMIO AGORA
           </button>
         </div>
+
       </div>
     </div>
 
-    <!-- Modal Checkout -->
-    <div
-      id="checkout-modal"
-      class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 overflow-y-auto z-[1000]"
-    >
-      <div
-        class="bg-gray-900 border border-gray-700 rounded-xl w-full max-w-md my-auto shadow-2xl transform scale-95 transition-transform duration-300 modal-content relative"
-      >
-        <button
-          id="btn-close-checkout"
-          class="absolute top-3 right-3 text-gray-400 hover:text-white z-10 bg-gray-800 rounded-full p-1"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
+    <!-- --- NOVO MODAL DE CHECKOUT (PROFISSIONAL) --- -->
+    <div id="checkout-modal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 overflow-y-auto z-[1000]">
+      <div class="bg-gray-900 border border-gray-700 rounded-xl w-full max-w-md my-auto shadow-2xl transform scale-95 transition-transform duration-300 modal-content relative">
+        
+        <!-- Botão Fechar -->
+        <button id="btn-close-checkout" class="absolute top-3 right-3 text-gray-400 hover:text-white z-10 bg-gray-800 rounded-full p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
+
         <div class="p-6">
-          <h2
-            class="font-anton text-2xl text-yellow-400 mb-6 border-b border-gray-700 pb-2 flex items-center gap-2"
-          >
+          <h2 class="font-anton text-2xl text-yellow-400 mb-6 border-b border-gray-700 pb-2 flex items-center gap-2">
             <span>📝</span> FINALIZAR PEDIDO
           </h2>
+          
           <form id="checkout-form" class="space-y-5">
+            
+            <!-- Seção: Quem é você? -->
             <div>
-              <label
-                class="block text-gray-300 text-sm font-bold mb-1 uppercase tracking-wide"
-                >Seu Nome</label
-              >
-              <input
-                type="text"
-                id="customerName"
-                class="checkout-input w-full bg-gray-800 border border-gray-600 rounded p-3 text-white focus:outline-none transition-colors"
-                placeholder="Digite seu nome completo"
-                required
-              />
+              <label class="block text-gray-300 text-sm font-bold mb-1 uppercase tracking-wide">Seu Nome</label>
+              <input type="text" id="customerName" class="checkout-input w-full bg-gray-800 border border-gray-600 rounded p-3 text-white focus:outline-none transition-colors" placeholder="Digite seu nome completo" required>
             </div>
+
+            <!-- Seção: Entrega -->
             <div>
-              <label
-                class="block text-gray-300 text-sm font-bold mb-2 uppercase tracking-wide"
-                >Entrega</label
-              >
+              <label class="block text-gray-300 text-sm font-bold mb-2 uppercase tracking-wide">Entrega</label>
               <div class="grid grid-cols-2 gap-3">
-                <label
-                  class="cursor-pointer border border-gray-600 rounded-lg p-3 bg-gray-800 hover:border-yellow-400 transition-all relative group"
-                >
-                  <input
-                    type="radio"
-                    name="delivery_option"
-                    value="delivery"
-                    class="absolute top-3 right-3 accent-yellow-400 w-4 h-4"
-                    checked
-                  />
+                <!-- Opção Delivery -->
+                <label class="cursor-pointer border border-gray-600 rounded-lg p-3 bg-gray-800 hover:border-yellow-400 transition-all relative group">
+                  <input type="radio" name="delivery_option" value="delivery" class="absolute top-3 right-3 accent-yellow-400 w-4 h-4" checked>
                   <div class="flex flex-col items-center">
-                    <span
-                      class="text-2xl mb-1 group-hover:scale-110 transition-transform"
-                      >🛵</span
-                    >
+                    <span class="text-2xl mb-1 group-hover:scale-110 transition-transform">🛵</span>
                     <span class="text-sm font-bold text-white">Entrega</span>
                     <span class="text-xs text-green-400">+ R$ 5,99</span>
                   </div>
                 </label>
-                <label
-                  class="cursor-pointer border border-gray-600 rounded-lg p-3 bg-gray-800 hover:border-yellow-400 transition-all relative group"
-                >
-                  <input
-                    type="radio"
-                    name="delivery_option"
-                    value="pickup"
-                    class="absolute top-3 right-3 accent-yellow-400 w-4 h-4"
-                  />
+                <!-- Opção Retirada -->
+                <label class="cursor-pointer border border-gray-600 rounded-lg p-3 bg-gray-800 hover:border-yellow-400 transition-all relative group">
+                  <input type="radio" name="delivery_option" value="pickup" class="absolute top-3 right-3 accent-yellow-400 w-4 h-4">
                   <div class="flex flex-col items-center">
-                    <span
-                      class="text-2xl mb-1 group-hover:scale-110 transition-transform"
-                      >🛍️</span
-                    >
+                    <span class="text-2xl mb-1 group-hover:scale-110 transition-transform">🛍️</span>
                     <span class="text-sm font-bold text-white">Retirada</span>
                     <span class="text-xs text-green-400">Grátis</span>
                   </div>
                 </label>
               </div>
             </div>
-            <div
-              id="address-group"
-              class="space-y-3 p-4 bg-black/40 rounded-lg border border-gray-700"
-            >
-              <div class="flex items-center gap-2 mb-1">
-                <span class="text-yellow-400">🏠</span
-                ><span class="text-sm font-bold text-gray-300"
-                  >Endereço de Entrega</span
-                >
-              </div>
-              <div>
-                <input
-                  type="text"
-                  id="customerStreet"
-                  class="checkout-input w-full bg-gray-800 border border-gray-600 rounded p-2 text-white text-sm focus:outline-none"
-                  placeholder="Rua / Avenida"
-                />
-              </div>
-              <div class="flex gap-3">
-                <div class="w-1/3">
-                  <input
-                    type="text"
-                    id="customerNumber"
-                    class="checkout-input w-full bg-gray-800 border border-gray-600 rounded p-2 text-white text-sm focus:outline-none"
-                    placeholder="Número"
-                  />
-                </div>
-                <div class="w-2/3">
-                  <input
-                    type="text"
-                    id="customerNeighborhood"
-                    class="checkout-input w-full bg-gray-800 border border-gray-600 rounded p-2 text-white text-sm focus:outline-none"
-                    placeholder="Bairro"
-                  />
-                </div>
-              </div>
+
+            <!-- Endereço (Condicional) -->
+            <div id="address-group" class="space-y-3 p-4 bg-black/40 rounded-lg border border-gray-700">
+               <div class="flex items-center gap-2 mb-1">
+                 <span class="text-yellow-400">🏠</span>
+                 <span class="text-sm font-bold text-gray-300">Endereço de Entrega</span>
+               </div>
+               <div>
+                 <input type="text" id="customerStreet" class="checkout-input w-full bg-gray-800 border border-gray-600 rounded p-2 text-white text-sm focus:outline-none" placeholder="Rua / Avenida">
+               </div>
+               <div class="flex gap-3">
+                 <div class="w-1/3">
+                   <input type="text" id="customerNumber" class="checkout-input w-full bg-gray-800 border border-gray-600 rounded p-2 text-white text-sm focus:outline-none" placeholder="Número">
+                 </div>
+                 <div class="w-2/3">
+                   <input type="text" id="customerNeighborhood" class="checkout-input w-full bg-gray-800 border border-gray-600 rounded p-2 text-white text-sm focus:outline-none" placeholder="Bairro">
+                 </div>
+               </div>
             </div>
+
+            <!-- Pagamento -->
             <div>
-              <label
-                class="block text-gray-300 text-sm font-bold mb-2 uppercase tracking-wide"
-                >Pagamento</label
-              >
+              <label class="block text-gray-300 text-sm font-bold mb-2 uppercase tracking-wide">Pagamento</label>
               <div class="space-y-2">
-                <label
-                  class="flex items-center bg-gray-800 p-3 rounded border border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors"
-                >
-                  <input
-                    type="radio"
-                    name="payment_option"
-                    value="pix"
-                    class="mr-3 accent-green-500 w-4 h-4"
-                    checked
-                  /><span class="text-white">💠 PIX</span>
+                <label class="flex items-center bg-gray-800 p-3 rounded border border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors">
+                  <input type="radio" name="payment_option" value="pix" class="mr-3 accent-green-500 w-4 h-4" checked>
+                  <span class="text-white">💠 PIX</span>
                 </label>
-                <label
-                  class="flex items-center bg-gray-800 p-3 rounded border border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors"
-                >
-                  <input
-                    type="radio"
-                    name="payment_option"
-                    value="card"
-                    class="mr-3 accent-yellow-400 w-4 h-4"
-                  /><span class="text-white">💳 Cartão</span>
+                <label class="flex items-center bg-gray-800 p-3 rounded border border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors">
+                  <input type="radio" name="payment_option" value="card" class="mr-3 accent-yellow-400 w-4 h-4">
+                  <span class="text-white">💳 Cartão</span>
                 </label>
-                <label
-                  class="flex items-center bg-gray-800 p-3 rounded border border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors"
-                >
-                  <input
-                    type="radio"
-                    name="payment_option"
-                    value="cash"
-                    class="mr-3 accent-green-500 w-4 h-4"
-                  /><span class="text-white">💵 Dinheiro</span>
+                <label class="flex items-center bg-gray-800 p-3 rounded border border-gray-600 cursor-pointer hover:bg-gray-700 transition-colors">
+                  <input type="radio" name="payment_option" value="cash" class="mr-3 accent-green-500 w-4 h-4">
+                  <span class="text-white">💵 Dinheiro</span>
                 </label>
               </div>
             </div>
-            <div
-              class="bg-black p-4 rounded border border-yellow-400/30 space-y-2 text-sm mt-4"
-            >
-              <div class="flex justify-between text-gray-400">
-                <span>Subtotal</span><span id="modal-subtotal">R$ 0,00</span>
-              </div>
-              <div
-                class="flex justify-between text-gray-400"
-                id="modal-delivery-row"
-              >
-                <span>Taxa de Entrega</span
-                ><span id="modal-delivery-fee">R$ 0,00</span>
-              </div>
-              <div
-                class="flex justify-between text-green-400 hidden"
-                id="modal-discount-row"
-              >
-                <span class="font-bold">Desconto Aplicado</span
-                ><span id="modal-discount-val" class="font-bold"
-                  >- R$ 0,00</span
-                >
-              </div>
-              <div
-                class="flex justify-between text-white font-bold text-xl border-t border-gray-700 pt-3 mt-2"
-              >
-                <span>TOTAL</span
-                ><span id="modal-total" class="text-yellow-400">R$ 0,00</span>
-              </div>
+
+            <!-- Resumo de Valores -->
+            <div class="bg-black p-4 rounded border border-yellow-400/30 space-y-2 text-sm mt-4">
+               <div class="flex justify-between text-gray-400">
+                 <span>Subtotal</span>
+                 <span id="modal-subtotal">R$ 0,00</span>
+               </div>
+               <div class="flex justify-between text-gray-400" id="modal-delivery-row">
+                 <span>Taxa de Entrega</span>
+                 <span id="modal-delivery-fee">R$ 0,00</span>
+               </div>
+               <div class="flex justify-between text-green-400 hidden" id="modal-discount-row">
+                 <span class="font-bold">Desconto Aplicado</span>
+                 <span id="modal-discount-val" class="font-bold">- R$ 0,00</span>
+               </div>
+               <div class="flex justify-between text-white font-bold text-xl border-t border-gray-700 pt-3 mt-2">
+                 <span>TOTAL</span>
+                 <span id="modal-total" class="text-yellow-400">R$ 0,00</span>
+               </div>
             </div>
-            <button
-              type="submit"
-              class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-lg shadow-lg transition-transform active:scale-95 font-anton text-xl flex justify-center items-center gap-2 tracking-wide"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                class="w-6 h-6"
-                alt="WhatsApp"
-              />
+
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-lg shadow-lg transition-transform active:scale-95 font-anton text-xl flex justify-center items-center gap-2 tracking-wide">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-6 h-6" alt="WhatsApp">
               ENVIAR PEDIDO
             </button>
+
           </form>
         </div>
       </div>
     </div>
 
-    <!-- Modal Roleta -->
-    <div
-      id="spinner-modal"
-      class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 z-[1000]"
-    >
-      <div
-        class="bg-black rounded-xl border-2 border-yellow-400 p-6 w-full max-w-md text-center transform scale-95 transition-transform duration-300 modal-content"
-      >
-        <h2 class="font-anton text-4xl text-yellow-500 mb-2">
-          ROLETA PREMIADA
-        </h2>
+    <!-- MODAL ROLETA -->
+    <div id="spinner-modal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 z-[1000]">
+      <div class="bg-black rounded-xl border-2 border-yellow-400 p-6 w-full max-w-md text-center transform scale-95 transition-transform duration-300 modal-content">
+        <h2 class="font-anton text-4xl text-yellow-500 mb-2">ROLETA PREMIADA</h2>
         <div class="wheel-container">
           <div class="wheel-pointer"></div>
           <canvas id="wheelCanvas" width="300" height="300"></canvas>
         </div>
-        <button
-          id="spinButton"
-          class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg mt-4 text-xl shadow-lg border border-red-800"
-        >
-          GIRAR AGORA!
-        </button>
+        <button id="spinButton" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-lg mt-4 text-xl shadow-lg border border-red-800">GIRAR AGORA!</button>
       </div>
     </div>
 
-    <!-- Toast -->
-    <div
-      id="notification"
-      class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-[2000] font-bold flex items-center gap-2"
-    >
-      <span>✅</span> Item Adicionado!
+    <!-- Notificação Toast -->
+    <div id="notification" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-[2000] font-bold flex items-center gap-2">
+       <span>✅</span> Item Adicionado!
+    </div>
+
+    <!-- Notificação de Compra Falsa -->
+    <div id="fake-purchase-notification" class="fixed top-24 left-4 z-[1000] max-w-xs bg-gray-900/95 backdrop-blur-md border-l-4 border-green-500 text-white p-3 rounded-r-lg shadow-2xl transform -translate-x-full transition-transform duration-500 flex items-center gap-3 pointer-events-none">
+      <!-- Ícone -->
+      <div class="bg-green-500/20 p-2 rounded-full flex-shrink-0">
+        <span class="text-lg">🛒</span>
+      </div>
+      <!-- Texto -->
+      <div class="flex-1">
+        <p id="fake-text" class="text-sm leading-snug font-medium text-gray-100"></p>
+        <p class="text-[10px] text-green-400 uppercase tracking-wider mt-0.5 font-bold">Pedido Recente</p>
+      </div>
     </div>
 
     <script>
+      // --- CONFIGURAÇÕES ---
       const deliveryFee = 5.99;
       const phoneNumber = "5567998890717";
-      const defaultImage =
-        "https://placehold.co/400x300/581c87/fff?text=La+Casa";
+      const defaultImage = "https://placehold.co/400x300/581c87/fff?text=La+Casa";
 
-      // --- DADOS DO CARDÁPIO ---
+      // --- DADOS ---
       const menuItems = [
-        {
-          id: 42,
-          name: "Batata Calabresa",
-          category: "BATATA RECHEADA NO POTE 500G",
-          description: "Calabresa, requeijão, cheddar.",
-          price: 29.9,
-          image:
-            "https://i.ibb.co/gb49Nc3B/Chat-GPT-Image-18-de-out-de-2025-23-20-51.png",
-        },
-        {
-          id: 43,
-          name: "Batata Bacon e Calabresa",
-          category: "BATATA RECHEADA NO POTE 500G",
-          description: "Bacon crocante e calabresa.",
-          price: 32.0,
-          image:
-            "https://i.ibb.co/wZR6TTKy/Chat-GPT-Image-17-de-out-de-2025-22-33-26.png",
-        },
-        {
-          id: 54,
-          name: "Batata Frango com Bacon",
-          category: "BATATA RECHEADA NO POTE 500G",
-          description: "Frango em cubos e bacon.",
-          price: 34.0,
-          image:
-            "https://i.ibb.co/qS3btWy/Chat-GPT-Image-18-de-out-de-2025-12-36-26.png",
-        },
-        {
-          id: 53,
-          name: "Batata de Carne em Cubos",
-          category: "BATATA RECHEADA NO POTE 500G",
-          description: "Deliciosa carne em cubos.",
-          price: 36.0,
-          image:
-            "https://i.ibb.co/5W80XnK2/Chat-GPT-Image-18-de-out-de-2025-12-25-08.png",
-        },
-        {
-          id: 39,
-          name: "Batata Strogonoff Frango",
-          category: "BATATA RECHEADA NO POTE 500G",
-          description: "Creme de batata e strogonoff.",
-          price: 37.0,
-          image:
-            "https://i.ibb.co/8D5PmwKh/Chat-GPT-Image-18-de-out-de-2025-10-13-42.png",
-        },
-        {
-          id: 44,
-          name: "Batata Strogonoff Carne",
-          category: "BATATA RECHEADA NO POTE 500G",
-          description: "Strogonoff de carne macia.",
-          price: 39.9,
-          image:
-            "https://i.ibb.co/Lz0vkLHn/Chat-GPT-Image-17-de-out-de-2025-22-34-35.png",
-        },
-        {
-          id: 55,
-          name: "Combo Casal",
-          category: "Combos",
-          description: "1 Strogonoff Carne + 1 Frango + 2 Cocas.",
-          price: 77.0,
-          image:
-            "https://i.ibb.co/7NB8R6Vk/Chat-GPT-Image-18-de-out-de-2025-00-47-11.png",
-        },
-        {
-          id: 56,
-          name: "Combo Família",
-          category: "Combos",
-          description: "2 Strogonoffs + Bebidas.",
-          price: 125.0,
-          image:
-            "https://i.ibb.co/tM5sVB8r/Chat-GPT-Image-18-de-out-de-2025-01-01-55.png",
-        },
-        {
-          id: 32,
-          name: "Shake Leitinho 300ml",
-          category: "SHAKES DE AÇAÍ 300ml",
-          description: "Leite Ninho cremoso.",
-          price: 18.0,
-          image: "https://i.ibb.co/ccB0Vbbt/5.png",
-        },
-        {
-          id: 31,
-          name: "Shake Ninho e Paçoca 300ml",
-          category: "SHAKES DE AÇAÍ 300ml",
-          description: "Ninho com paçoca.",
-          price: 20.0,
-          image: "https://i.ibb.co/0V9Q0zNN/4.png",
-        },
-        {
-          id: 29,
-          name: "Shake Avelã 300ml",
-          category: "SHAKES DE AÇAÍ 300ml",
-          description: "Açaí com avelã.",
-          price: 22.0,
-          image: "https://i.ibb.co/xSf6M8xB/2.png",
-        },
-        {
-          id: 37,
-          name: "Shake Leitinho 500ml",
-          category: "SHAKES DE AÇAÍ 500ml",
-          description: "Leite Ninho cremoso.",
-          price: 25.0,
-          image: "https://i.ibb.co/ccB0Vbbt/5.png",
-        },
-        {
-          id: 36,
-          name: "Shake Ninho e Paçoca 500ml",
-          category: "SHAKES DE AÇAÍ 500ml",
-          description: "Ninho com paçoca.",
-          price: 27.0,
-          image: "https://i.ibb.co/0V9Q0zNN/4.png",
-        },
-        {
-          id: 34,
-          name: "Shake Avelã 500ml",
-          category: "SHAKES DE AÇAÍ 500ml",
-          description: "Açaí com avelã.",
-          price: 30.0,
-          image: "https://i.ibb.co/xSf6M8xB/2.png",
-        },
-        {
-          id: 52,
-          name: "Coca-Cola 250ml",
-          category: "Bebidas",
-          description: "Gelada.",
-          price: 6.0,
-          image:
-            "https://i.ibb.co/HLJW25nC/Chat-GPT-Image-18-de-out-de-2025-11-47-18.png",
-        },
-        {
-          id: 49,
-          name: "Coca-Cola 1.5L",
-          category: "Bebidas",
-          description: "Para família.",
-          price: 13.0,
-          image:
-            "https://i.ibb.co/Kz3zKp87/Chat-GPT-Image-18-de-out-de-2025-11-38-16.png",
-        },
+        { id: 42, name: "Batata Calabresa", category: "BATATA RECHEADA NO POTE 500G", description: "Calabresa, requeijão, cheddar.", price: 29.9, image: "https://i.ibb.co/gb49Nc3B/Chat-GPT-Image-18-de-out-de-2025-23-20-51.png" },
+        { id: 43, name: "Batata Bacon e Calabresa", category: "BATATA RECHEADA NO POTE 500G", description: "Bacon crocante e calabresa.", price: 32.0, image: "https://i.ibb.co/wZR6TTKy/Chat-GPT-Image-17-de-out-de-2025-22-33-26.png" },
+        { id: 54, name: "Batata Frango com Bacon", category: "BATATA RECHEADA NO POTE 500G", description: "Frango em cubos e bacon.", price: 34.0, image: "https://i.ibb.co/qS3btWy/Chat-GPT-Image-18-de-out-de-2025-12-36-26.png" },
+        { id: 53, name: "Batata de Carne em Cubos", category: "BATATA RECHEADA NO POTE 500G", description: "Deliciosa carne em cubos.", price: 36.0, image: "https://i.ibb.co/5W80XnK2/Chat-GPT-Image-18-de-out-de-2025-12-25-08.png" },
+        { id: 39, name: "Batata Strogonoff Frango", category: "BATATA RECHEADA NO POTE 500G", description: "Creme de batata e strogonoff.", price: 37.0, image: "https://i.ibb.co/8D5PmwKh/Chat-GPT-Image-18-de-out-de-2025-10-13-42.png" },
+        { id: 44, name: "Batata Strogonoff Carne", category: "BATATA RECHEADA NO POTE 500G", description: "Strogonoff de carne macia.", price: 39.9, image: "https://i.ibb.co/Lz0vkLHn/Chat-GPT-Image-17-de-out-de-2025-22-34-35.png" },
+        { id: 55, name: "Combo Casal", category: "Combos", description: "1 Strogonoff Carne + 1 Frango + 2 Cocas.", price: 77.0, image: "https://i.ibb.co/7NB8R6Vk/Chat-GPT-Image-18-de-out-de-2025-00-47-11.png" },
+        { id: 56, name: "Combo Família", category: "Combos", description: "2 Strogonoffs + Bebidas.", price: 125.0, image: "https://i.ibb.co/tM5sVB8r/Chat-GPT-Image-18-de-out-de-2025-01-01-55.png" },
+        { id: 32, name: "Shake Leitinho 300ml", category: "SHAKES DE AÇAÍ 300ml", description: "Leite Ninho cremoso.", price: 18.0, image: "https://i.ibb.co/ccB0Vbbt/5.png" },
+        { id: 31, name: "Shake Ninho e Paçoca 300ml", category: "SHAKES DE AÇAÍ 300ml", description: "Ninho com paçoca.", price: 20.0, image: "https://i.ibb.co/0V9Q0zNN/4.png" },
+        { id: 29, name: "Shake Avelã 300ml", category: "SHAKES DE AÇAÍ 300ml", description: "Açaí com avelã.", price: 22.0, image: "https://i.ibb.co/xSf6M8xB/2.png" },
+        { id: 37, name: "Shake Leitinho 500ml", category: "SHAKES DE AÇAÍ 500ml", description: "Leite Ninho cremoso.", price: 25.0, image: "https://i.ibb.co/ccB0Vbbt/5.png" },
+        { id: 36, name: "Shake Ninho e Paçoca 500ml", category: "SHAKES DE AÇAÍ 500ml", description: "Ninho com paçoca.", price: 27.0, image: "https://i.ibb.co/0V9Q0zNN/4.png" },
+        { id: 34, name: "Shake Avelã 500ml", category: "SHAKES DE AÇAÍ 500ml", description: "Açaí com avelã.", price: 30.0, image: "https://i.ibb.co/xSf6M8xB/2.png" },
+        { id: 52, name: "Coca-Cola 250ml", category: "Bebidas", description: "Gelada.", price: 6.0, image: "https://i.ibb.co/HLJW25nC/Chat-GPT-Image-18-de-out-de-2025-11-47-18.png" },
+        { id: 49, name: "Coca-Cola 1.5L", category: "Bebidas", description: "Para família.", price: 13.0, image: "https://i.ibb.co/Kz3zKp87/Chat-GPT-Image-18-de-out-de-2025-11-38-16.png" }
       ];
 
+      // Variáveis de Estado
       let cart = [];
       let activeDiscount = null;
-      const formatMoney = (val) => `R$ ${val.toFixed(2).replace(".", ",")}`;
+
+      // --- HELPERS ---
+      const formatMoney = (val) => `R$ ${val.toFixed(2).replace('.', ',')}`;
 
       document.addEventListener("DOMContentLoaded", () => {
+        
+        // Referências DOM
         const els = {
-          menu: document.getElementById("menu"),
-          cartContainer: document.getElementById("cart-container"),
-          cartItems: document.getElementById("cart-items"),
-          cartCount: document.getElementById("cart-count"),
-          cartTotal: document.getElementById("cart-total"),
-          emptyMsg: document.getElementById("empty-cart-message"),
-          cartFooter: document.getElementById("cart-footer"),
-          cartArrow: document.getElementById("cart-arrow"),
-          prizeDisplay: document.getElementById("cart-prize-display"),
-          prizeText: document.getElementById("active-prize-text"),
-          spinnerBanner: document.getElementById("open-spinner-banner"),
-          spinnerModal: document.getElementById("spinner-modal"),
-          prizeModal: document.getElementById("prizeModal"),
-          checkoutModal: document.getElementById("checkout-modal"),
-          btnOpenCheckout: document.getElementById("btn-open-checkout"),
-          btnCloseCheckout: document.getElementById("btn-close-checkout"),
-          btnClaimPrize: document.getElementById("closeModal"),
-          spinButton: document.getElementById("spinButton"),
-          notification: document.getElementById("notification"),
-          checkoutForm: document.getElementById("checkout-form"),
-          modalSubtotal: document.getElementById("modal-subtotal"),
-          modalDeliveryRow: document.getElementById("modal-delivery-row"),
-          modalDeliveryFee: document.getElementById("modal-delivery-fee"),
-          modalDiscountRow: document.getElementById("modal-discount-row"),
-          modalDiscountVal: document.getElementById("modal-discount-val"),
-          modalTotal: document.getElementById("modal-total"),
-          deliveryRadios: document.querySelectorAll(
-            'input[name="delivery_option"]'
-          ),
-          addressGroup: document.getElementById("address-group"),
+          menu: document.getElementById('menu'),
+          cartContainer: document.getElementById('cart-container'),
+          cartItems: document.getElementById('cart-items'),
+          cartCount: document.getElementById('cart-count'),
+          cartTotal: document.getElementById('cart-total'),
+          emptyMsg: document.getElementById('empty-cart-message'),
+          cartFooter: document.getElementById('cart-footer'),
+          cartArrow: document.getElementById('cart-arrow'),
+          
+          // Prize
+          prizeDisplay: document.getElementById('cart-prize-display'),
+          prizeText: document.getElementById('active-prize-text'),
+          
+          // Modais
+          spinnerBanner: document.getElementById('open-spinner-banner'),
+          spinnerModal: document.getElementById('spinner-modal'),
+          prizeModal: document.getElementById('prizeModal'),
+          checkoutModal: document.getElementById('checkout-modal'),
+          
+          // Buttons
+          btnOpenCheckout: document.getElementById('btn-open-checkout'),
+          btnCloseCheckout: document.getElementById('btn-close-checkout'),
+          btnClaimPrize: document.getElementById('closeModal'), // Corrigido ID
+          spinButton: document.getElementById('spinButton'),
+          notification: document.getElementById('notification'),
+          
+          // Checkout Form Elements
+          checkoutForm: document.getElementById('checkout-form'),
+          modalSubtotal: document.getElementById('modal-subtotal'),
+          modalDeliveryRow: document.getElementById('modal-delivery-row'),
+          modalDeliveryFee: document.getElementById('modal-delivery-fee'),
+          modalDiscountRow: document.getElementById('modal-discount-row'),
+          modalDiscountVal: document.getElementById('modal-discount-val'),
+          modalTotal: document.getElementById('modal-total'),
+          deliveryRadios: document.querySelectorAll('input[name="delivery_option"]'),
+          addressGroup: document.getElementById('address-group')
         };
 
+        // 1. RENDERIZAR MENU
         function renderMenu() {
-          els.menu.innerHTML = "";
-          const categories = [...new Set(menuItems.map((i) => i.category))];
-          categories.forEach((cat) => {
-            const titleDiv = document.createElement("div");
+          els.menu.innerHTML = '';
+          const categories = [...new Set(menuItems.map(i => i.category))];
+
+          categories.forEach(cat => {
+            const titleDiv = document.createElement('div');
             titleDiv.className = "col-span-full mt-6 mb-2";
             titleDiv.innerHTML = `<h2 class="font-anton text-3xl text-white border-b-2 border-yellow-400 inline pb-1">${cat}</h2>`;
             els.menu.appendChild(titleDiv);
-            const items = menuItems.filter((i) => i.category === cat);
-            items.forEach((item) => {
-              const card = document.createElement("div");
-              card.className =
-                "bg-black rounded-lg overflow-hidden shadow-lg border border-gray-800 hover:border-yellow-400 transition-all duration-300 flex flex-col";
-              card.innerHTML = `
+
+            const items = menuItems.filter(i => i.category === cat);
+            items.forEach(item => {
+               const card = document.createElement('div');
+               card.className = "bg-black rounded-lg overflow-hidden shadow-lg border border-gray-800 hover:border-yellow-400 transition-all duration-300 flex flex-col";
+               card.innerHTML = `
                  <div class="relative h-48 overflow-hidden group">
-                   <img src="${
-                     item.image
-                   }" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='${defaultImage}'">
-                   <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/90 to-transparent p-2 pt-8"><h3 class="font-anton text-xl text-yellow-400 truncate drop-shadow-md">${
-                     item.name
-                   }</h3></div>
+                   <img src="${item.image}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.src='${defaultImage}'">
+                   <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/90 to-transparent p-2 pt-8">
+                     <h3 class="font-anton text-xl text-yellow-400 truncate drop-shadow-md">${item.name}</h3>
+                   </div>
                  </div>
                  <div class="p-4 flex flex-col flex-grow">
-                   <p class="text-gray-400 text-sm mb-4 flex-grow">${
-                     item.description
-                   }</p>
+                   <p class="text-gray-400 text-sm mb-4 flex-grow">${item.description}</p>
                    <div class="flex justify-between items-center mt-auto border-t border-gray-800 pt-3">
-                     <span class="font-bold text-xl text-white">${formatMoney(
-                       item.price
-                     )}</span>
-                     <button class="add-btn bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-5 rounded-lg shadow-md active:scale-95 transition-transform uppercase text-sm" data-id="${
-                       item.id
-                     }">Adicionar</button>
+                     <span class="font-bold text-xl text-white">${formatMoney(item.price)}</span>
+                     <button class="add-btn bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-5 rounded-lg shadow-md active:scale-95 transition-transform uppercase text-sm" data-id="${item.id}">
+                       Adicionar
+                     </button>
                    </div>
-                 </div>`;
-              card
-                .querySelector(".add-btn")
-                .addEventListener("click", () => addToCart(item.id));
-              els.menu.appendChild(card);
+                 </div>
+               `;
+               const btn = card.querySelector('.add-btn');
+               btn.addEventListener('click', () => addToCart(item.id));
+               els.menu.appendChild(card);
             });
           });
         }
 
+        // 2. CARRINHO
         function addToCart(id) {
-          const item = menuItems.find((i) => i.id === id);
-          const existing = cart.find((i) => i.id === id);
-          if (existing) existing.quantity++;
-          else cart.push({ ...item, quantity: 1 });
+          const item = menuItems.find(i => i.id === id);
+          const existing = cart.find(i => i.id === id);
+          if (existing) existing.quantity++; else cart.push({ ...item, quantity: 1 });
           updateCartUI();
-          showCart();
-          expandCart();
-          showToast();
+          showCart(); expandCart(); showToast();
         }
 
         function updateCartUI() {
-          els.cartItems.innerHTML = "";
+          els.cartItems.innerHTML = '';
           let subtotal = 0;
           let count = 0;
+
           if (cart.length === 0) {
-            els.emptyMsg.classList.remove("hidden");
-            els.cartItems.classList.add("hidden");
-            els.cartFooter.classList.add("hidden");
-            els.prizeDisplay.classList.add("hidden");
+            els.emptyMsg.classList.remove('hidden');
+            els.cartItems.classList.add('hidden');
+            els.cartFooter.classList.add('hidden');
+            els.prizeDisplay.classList.add('hidden');
           } else {
-            els.emptyMsg.classList.add("hidden");
-            els.cartItems.classList.remove("hidden");
-            els.cartFooter.classList.remove("hidden");
-            cart.forEach((item) => {
+            els.emptyMsg.classList.add('hidden');
+            els.cartItems.classList.remove('hidden');
+            els.cartFooter.classList.remove('hidden');
+
+            cart.forEach(item => {
               subtotal += item.price * item.quantity;
               count += item.quantity;
-              const div = document.createElement("div");
-              div.className =
-                "flex justify-between items-center bg-gray-800 p-3 rounded-lg border border-gray-700";
+              const div = document.createElement('div');
+              div.className = "flex justify-between items-center bg-gray-800 p-3 rounded-lg border border-gray-700";
               div.innerHTML = `
-                <div class="flex-grow"><p class="font-bold text-yellow-400 text-sm font-anton tracking-wide">${item.name.toUpperCase()}</p><p class="text-xs text-gray-300 mt-1">Unit: ${formatMoney(
-                item.price
-              )}</p></div>
-                <div class="flex items-center gap-3"><div class="flex items-center bg-black rounded border border-gray-600"><button class="px-2 py-1 text-red-500 font-bold hover:bg-gray-900 qtd-btn" data-act="dec" data-id="${
-                  item.id
-                }">-</button><span class="px-2 text-white text-sm font-bold">${
-                item.quantity
-              }</span><button class="px-2 py-1 text-green-500 font-bold hover:bg-gray-900 qtd-btn" data-act="inc" data-id="${
-                item.id
-              }">+</button></div><span class="font-bold text-white w-20 text-right">${formatMoney(
-                item.price * item.quantity
-              )}</span></div>`;
-              div.querySelectorAll(".qtd-btn").forEach((btn) => {
-                btn.addEventListener("click", (e) => {
+                <div class="flex-grow">
+                  <p class="font-bold text-yellow-400 text-sm font-anton tracking-wide">${item.name.toUpperCase()}</p>
+                  <p class="text-xs text-gray-300 mt-1">Unit: ${formatMoney(item.price)}</p>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center bg-black rounded border border-gray-600">
+                     <button class="px-2 py-1 text-red-500 font-bold hover:bg-gray-900 qtd-btn" data-act="dec" data-id="${item.id}">-</button>
+                     <span class="px-2 text-white text-sm font-bold">${item.quantity}</span>
+                     <button class="px-2 py-1 text-green-500 font-bold hover:bg-gray-900 qtd-btn" data-act="inc" data-id="${item.id}">+</button>
+                  </div>
+                  <span class="font-bold text-white w-20 text-right">${formatMoney(item.price * item.quantity)}</span>
+                </div>
+              `;
+              div.querySelectorAll('.qtd-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
                   const id = parseInt(e.target.dataset.id);
                   const act = e.target.dataset.act;
-                  const target = cart.find((i) => i.id === id);
-                  if (act === "inc") target.quantity++;
-                  else {
-                    target.quantity--;
-                    if (target.quantity <= 0)
-                      cart = cart.filter((i) => i.id !== id);
-                  }
+                  const target = cart.find(i => i.id === id);
+                  if (act === 'inc') target.quantity++;
+                  else { target.quantity--; if (target.quantity <= 0) cart = cart.filter(i => i.id !== id); }
                   updateCartUI();
                 });
               });
               els.cartItems.appendChild(div);
             });
           }
+
+          // Atualiza dados do carrinho
           els.cartCount.innerText = count;
           els.cartTotal.innerText = formatMoney(subtotal);
+
           if (activeDiscount) {
-            els.prizeDisplay.classList.remove("hidden");
-            els.prizeText.innerText = activeDiscount.text.replace("\n", " ");
+             els.prizeDisplay.classList.remove('hidden');
+             els.prizeText.innerText = activeDiscount.text.replace('\n', ' ');
           } else {
-            els.prizeDisplay.classList.add("hidden");
+             els.prizeDisplay.classList.add('hidden');
           }
         }
 
-        function showCart() {
-          els.cartContainer.classList.remove("cart-hidden");
-        }
-        function expandCart() {
-          els.cartContainer.classList.remove("cart-minimized");
-          document.getElementById("cart-arrow").style.transform =
-            "rotate(180deg)";
-        }
-        function minimizeCart() {
-          els.cartContainer.classList.add("cart-minimized");
-          document.getElementById("cart-arrow").style.transform =
-            "rotate(0deg)";
-        }
-        document
-          .getElementById("cart-header-area")
-          .addEventListener("click", () => {
-            if (els.cartContainer.classList.contains("cart-minimized"))
-              expandCart();
-            else minimizeCart();
-          });
+        // --- VISIBILIDADE ---
+        function showCart() { els.cartContainer.classList.remove('cart-hidden'); }
+        function expandCart() { els.cartContainer.classList.remove('cart-minimized'); document.getElementById('cart-arrow').style.transform = 'rotate(180deg)'; }
+        function minimizeCart() { els.cartContainer.classList.add('cart-minimized'); document.getElementById('cart-arrow').style.transform = 'rotate(0deg)'; }
+        document.getElementById('cart-header-area').addEventListener('click', () => {
+           if(els.cartContainer.classList.contains('cart-minimized')) expandCart(); else minimizeCart();
+        });
         function showToast() {
-          els.notification.classList.remove("translate-x-full");
-          setTimeout(
-            () => els.notification.classList.add("translate-x-full"),
-            2500
-          );
+          els.notification.classList.remove('translate-x-full');
+          setTimeout(() => els.notification.classList.add('translate-x-full'), 2500);
         }
-        function openModal(el) {
-          el.classList.remove("hidden");
-          setTimeout(() => {
-            el.classList.remove("opacity-0");
-            el.querySelector(
-              ".modal-content, .modal-content-prize"
-            ).classList.add("show");
-          }, 10);
-        }
-        function closeModal(el) {
-          el.classList.add("opacity-0");
-          el.querySelector(
-            ".modal-content, .modal-content-prize"
-          ).classList.remove("show");
-          setTimeout(() => el.classList.add("hidden"), 300);
-        }
+
+        // --- MODALS HELPERS ---
+        function openModal(el) { el.classList.remove('hidden'); setTimeout(() => { el.classList.remove('opacity-0'); el.querySelector('.modal-content, .modal-content-prize').classList.add('show'); }, 10); }
+        function closeModal(el) { el.classList.add('opacity-0'); el.querySelector('.modal-content, .modal-content-prize').classList.remove('show'); setTimeout(() => el.classList.add('hidden'), 300); }
+        
+        // --- AUX: SHOW PRIZE ---
         function showPrize(win) {
-          document.getElementById("prizeText").innerText = win.text;
-          openModal(els.prizeModal);
+           document.getElementById('prizeText').innerText = win.text;
+           openModal(els.prizeModal);
         }
 
+        // --- CHECKOUT LOGIC ---
         function updateCheckoutTotal() {
-          const itemSubtotal = cart.reduce(
-            (acc, item) => acc + item.price * item.quantity,
-            0
-          );
-          const isDelivery =
-            document.querySelector('input[name="delivery_option"]:checked')
-              .value === "delivery";
-          const fee = isDelivery ? deliveryFee : 0;
-          let discountVal = 0;
-          if (activeDiscount) {
-            if (activeDiscount.type === "free_shipping" && isDelivery)
-              discountVal = deliveryFee;
-            else if (activeDiscount.type === "discount_fixed")
-              discountVal = activeDiscount.value;
-            else if (activeDiscount.type === "discount_percent")
-              discountVal = itemSubtotal * activeDiscount.value;
-          }
-          const total = Math.max(0, itemSubtotal + fee - discountVal);
-          els.modalSubtotal.innerText = formatMoney(itemSubtotal);
-          els.modalDeliveryFee.innerText = formatMoney(fee);
-          els.modalTotal.innerText = formatMoney(total);
-          if (isDelivery) {
-            els.addressGroup.classList.remove("hidden");
-            els.modalDeliveryRow.classList.remove("hidden");
-            document.getElementById("customerStreet").required = true;
-            document.getElementById("customerNumber").required = true;
-          } else {
-            els.addressGroup.classList.add("hidden");
-            els.modalDeliveryRow.classList.add("hidden");
-            document.getElementById("customerStreet").required = false;
-            document.getElementById("customerNumber").required = false;
-          }
-          if (discountVal > 0) {
-            els.modalDiscountRow.classList.remove("hidden");
-            els.modalDiscountVal.innerText = `- ${formatMoney(discountVal)}`;
-          } else {
-            els.modalDiscountRow.classList.add("hidden");
-          }
+           const itemSubtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+           const isDelivery = document.querySelector('input[name="delivery_option"]:checked').value === 'delivery';
+           const fee = isDelivery ? deliveryFee : 0;
+
+           let discountVal = 0;
+           if (activeDiscount) {
+              if (activeDiscount.type === 'free_shipping' && isDelivery) discountVal = deliveryFee;
+              else if (activeDiscount.type === 'discount_fixed') discountVal = activeDiscount.value;
+              else if (activeDiscount.type === 'discount_percent') discountVal = itemSubtotal * activeDiscount.value;
+           }
+
+           const total = Math.max(0, itemSubtotal + fee - discountVal);
+
+           els.modalSubtotal.innerText = formatMoney(itemSubtotal);
+           els.modalDeliveryFee.innerText = formatMoney(fee);
+           els.modalTotal.innerText = formatMoney(total);
+
+           if (isDelivery) {
+             els.addressGroup.classList.remove('hidden');
+             els.modalDeliveryRow.classList.remove('hidden');
+             document.getElementById('customerStreet').required = true;
+             document.getElementById('customerNumber').required = true;
+           } else {
+             els.addressGroup.classList.add('hidden');
+             els.modalDeliveryRow.classList.add('hidden');
+             document.getElementById('customerStreet').required = false;
+             document.getElementById('customerNumber').required = false;
+           }
+
+           if (discountVal > 0) {
+              els.modalDiscountRow.classList.remove('hidden');
+              els.modalDiscountVal.innerText = `- ${formatMoney(discountVal)}`;
+           } else {
+              els.modalDiscountRow.classList.add('hidden');
+           }
         }
 
-        els.btnOpenCheckout.addEventListener("click", () => {
-          if (cart.length === 0) return;
-          updateCheckoutTotal();
-          openModal(els.checkoutModal);
+        // --- EVENT LISTENERS CHECKOUT ---
+        els.btnOpenCheckout.addEventListener('click', () => {
+           if(cart.length === 0) return;
+           updateCheckoutTotal();
+           openModal(els.checkoutModal);
         });
-        els.btnCloseCheckout.addEventListener("click", () =>
-          closeModal(els.checkoutModal)
-        );
-        els.deliveryRadios.forEach((r) =>
-          r.addEventListener("change", updateCheckoutTotal)
-        );
+        els.btnCloseCheckout.addEventListener('click', () => closeModal(els.checkoutModal));
+        els.deliveryRadios.forEach(r => r.addEventListener('change', updateCheckoutTotal));
 
-        els.checkoutForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const name = document.getElementById("customerName").value;
-          const isDelivery =
-            document.querySelector('input[name="delivery_option"]:checked')
-              .value === "delivery";
-          const payMethod = document.querySelector(
-            'input[name="payment_option"]:checked'
-          ).value;
-          const payMap = { pix: "PIX", card: "Cartão", cash: "Dinheiro" };
-          const now = new Date();
-          const dateStr = now.toLocaleDateString("pt-BR", {
-            day: "2-digit",
-            month: "2-digit",
-          });
-          const timeStr = now.toLocaleTimeString("pt-BR", {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
+        // Submit Checkout
+        els.checkoutForm.addEventListener('submit', (e) => {
+           e.preventDefault();
+           const name = document.getElementById('customerName').value;
+           const isDelivery = document.querySelector('input[name="delivery_option"]:checked').value === 'delivery';
+           const payMethod = document.querySelector('input[name="payment_option"]:checked').value;
+           const payMap = { 'pix': 'PIX', 'card': 'Cartão', 'cash': 'Dinheiro' };
+           
+           const now = new Date();
+           const dateStr = now.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+           const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+           
+           let msg = `======= *NOVO PEDIDO* =======\n*LA CASA BOX & SHAKES*\n*Data/Hora:* ${dateStr}, ${timeStr}\n\n*CLIENTE:* ${name}\n\n`;
+           if (isDelivery) {
+              const st = document.getElementById('customerStreet').value;
+              const num = document.getElementById('customerNumber').value;
+              const hood = document.getElementById('customerNeighborhood').value;
+              const neighborhoodStr = hood ? ` - ${hood}` : '';
+              msg += `*TIPO:* 🛵 Delivery\n*ENDEREÇO:* ${st}, Nº ${num}${neighborhoodStr}\n`;
+           } else {
+              msg += `*TIPO:* 🛍️ Retirada\n`;
+           }
 
-          let msg = `======= *NOVO PEDIDO* =======\n*LA CASA BOX & SHAKES*\n*Data/Hora:* ${dateStr}, ${timeStr}\n\n*CLIENTE:* ${name}\n\n`;
-          if (isDelivery) {
-            const st = document.getElementById("customerStreet").value;
-            const num = document.getElementById("customerNumber").value;
-            const hood = document.getElementById("customerNeighborhood").value;
-            const neighborhoodStr = hood ? ` - ${hood}` : "";
-            msg += `*TIPO:* 🛵 Delivery\n*ENDEREÇO:* ${st}, Nº ${num}${neighborhoodStr}\n`;
-          } else {
-            msg += `*TIPO:* 🛍️ Retirada\n`;
-          }
-          msg += `----------------------------------\n*ITENS DO PEDIDO:*\n\n`;
-          cart.forEach((i) => {
-            msg += `▪️ *${i.quantity}x ${i.name}*\n  (Valor: ${formatMoney(
-              i.price * i.quantity
-            )})\n\n`;
-          });
-          msg += `----------------------------------\n*PAGAMENTO:* ${payMap[payMethod]}\n\nSubtotal: ${els.modalSubtotal.innerText}\n`;
-          if (isDelivery)
-            msg += `Taxa de Entrega: ${els.modalDeliveryFee.innerText}\n`;
-          if (activeDiscount) {
-            msg += `*PRÊMIO ROLETA: ${activeDiscount.text.replace(
-              "\n",
-              " "
-            )}*\n*DESCONTO APLICADO: ${els.modalDiscountVal.innerText}*\n`;
-          }
-          msg += `*TOTAL A PAGAR: ${els.modalTotal.innerText}*\n==========================`;
-          const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-            msg
-          )}`;
-          window.open(url, "_blank");
-          cart = [];
-          activeDiscount = null;
-          localStorage.removeItem("lacasa_prizeWon");
-          updateCartUI();
-          closeModal(els.checkoutModal);
+           msg += `----------------------------------\n`;
+           msg += `*ITENS DO PEDIDO:*\n\n`;
+
+           cart.forEach(i => {
+             msg += `▪️ *${i.quantity}x ${i.name}*\n`;
+             msg += `  (Valor: ${formatMoney(i.price * i.quantity)})\n\n`;
+           });
+
+           msg += `----------------------------------\n`;
+           msg += `*PAGAMENTO:* ${payMap[payMethod]}\n\n`;
+
+           msg += `Subtotal: ${els.modalSubtotal.innerText}\n`;
+
+           if (isDelivery) {
+             msg += `Taxa de Entrega: ${els.modalDeliveryFee.innerText}\n`;
+           }
+
+           if (activeDiscount) {
+             msg += `*PRÊMIO ROLETA: ${activeDiscount.text.replace('\n', ' ')}*\n`;
+             msg += `*DESCONTO APLICADO: ${els.modalDiscountVal.innerText}*\n`;
+           }
+
+           msg += `*TOTAL A PAGAR: ${els.modalTotal.innerText}*\n`;
+           msg += `==========================`;
+
+           const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
+           window.open(url, '_blank');
+           
+           // Limpa e fecha
+           cart = []; activeDiscount = null; localStorage.removeItem('lacasa_prizeWon');
+           updateCartUI(); closeModal(els.checkoutModal);
         });
 
-        if (els.spinnerBanner)
-          els.spinnerBanner.addEventListener("click", () =>
-            openModal(els.spinnerModal)
-          );
-        els.btnClaimPrize.addEventListener("click", () => {
-          closeModal(els.prizeModal);
-          updateCartUI();
-          showCart();
-          expandCart();
+        // --- EVENT LISTENERS GERAIS ---
+        if(els.spinnerBanner) els.spinnerBanner.addEventListener('click', () => openModal(els.spinnerModal));
+        
+        // Botão do Modal de Prêmio -> Abre Checkout (OU carrinho se vazio)
+        els.btnClaimPrize.addEventListener('click', () => {
+           closeModal(els.prizeModal);
+           updateCartUI(); // Garante que o cupom apareça no carrinho
+           showCart(); 
+           expandCart();
         });
 
-        // Roleta
-        const canvas = document.getElementById("wheelCanvas");
+        // Reset Dev
+        const resetBtn = document.getElementById('reset-roulette-btn');
+        if (resetBtn) {
+           resetBtn.addEventListener('click', () => { localStorage.clear(); location.reload(); });
+        }
+
+        // --- LÓGICA DA ROLETA ---
+        const canvas = document.getElementById('wheelCanvas');
         if (canvas) {
-          const ctx = canvas.getContext("2d");
+          const ctx = canvas.getContext('2d');
           const prizes = [
-            { text: "R$ 5 OFF", type: "discount_fixed", value: 5.0 },
-            { text: "TENTE DE NOVO", type: "no_prize", value: 0 },
-            { text: "FRETE GRÁTIS", type: "free_shipping", value: 0 },
-            { text: "10% OFF", type: "discount_percent", value: 0.1 },
-            { text: "NADA AQUI", type: "no_prize", value: 0 },
-            { text: "R$ 5 OFF", type: "discount_fixed", value: 5.0 },
-            { text: "TENTE DE NOVO", type: "no_prize", value: 0 },
-            { text: "FRETE GRÁTIS", type: "free_shipping", value: 0 },
-            { text: "10% OFF", type: "discount_percent", value: 0.1 },
-            { text: "NADA AQUI", type: "no_prize", value: 0 },
-            { text: "R$ 5 OFF", type: "discount_fixed", value: 5.0 },
-            { text: "TENTE DE NOVO", type: "no_prize", value: 0 },
-          ];
-          const colors = ["#121212", "#facc15"];
-          const centerX = canvas.width / 2;
-          const centerY = canvas.height / 2;
-          const radius = canvas.width / 2;
-          const numSegments = prizes.length;
-          const segmentAngle = (Math.PI * 2) / numSegments;
-          function drawWheel() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.textBaseline = "middle";
-            prizes.forEach((prize, i) => {
-              const startAngle = i * segmentAngle;
-              const endAngle = (i + 1) * segmentAngle;
-              const segmentColor = colors[i % colors.length];
-              ctx.save();
-              ctx.beginPath();
-              ctx.fillStyle = segmentColor;
-              ctx.moveTo(centerX, centerY);
-              ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-              ctx.closePath();
-              ctx.fill();
-              ctx.save();
-              ctx.translate(centerX, centerY);
-              ctx.rotate(startAngle + segmentAngle / 2);
-              ctx.textAlign = "center";
-              ctx.textBaseline = "middle";
-              ctx.fillStyle = i % 2 === 0 ? "#ffffff" : "#121212";
-              ctx.font = "bold 11px Arial";
-              ctx.fillText(prize.text, radius * 0.6, 0);
-              ctx.restore();
-              ctx.restore();
-            });
-            ctx.beginPath();
-            ctx.fillStyle = "#facc15";
-            ctx.arc(centerX, centerY, 25, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.fillStyle = "#fff7d0";
-            ctx.arc(centerX, centerY, 15, 0, Math.PI * 2);
-            ctx.fill();
-          }
-          drawWheel();
-          let spinning = false;
-          els.spinButton.addEventListener("click", () => {
-            if (spinning) return;
-            spinning = true;
-            els.spinButton.innerText = "GIRANDO...";
-            els.spinButton.disabled = true;
-            const rot = 3600 + Math.random() * 360;
-            canvas.style.transition =
-              "transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)";
-            canvas.style.transform = `rotate(${rot}deg)`;
-            localStorage.setItem("lacasa_hasSpun", "true");
-            els.spinnerBanner.classList.add("hidden");
-            setTimeout(() => {
-              spinning = false;
-              const actual = rot % 360;
-              const index = Math.floor(
-                ((270 - actual + 360) % 360) / (360 / prizes.length)
-              );
-              const win = prizes[index];
-              closeModal(els.spinnerModal);
-              if (win.type === "no_prize") {
-                alert(`Você ganhou: ${win.text}`);
-                els.spinButton.disabled = false;
-                els.spinButton.innerText = "GIRAR AGORA!";
-                openModal(els.spinnerModal);
-              } else {
-                activeDiscount = win;
-                localStorage.setItem("lacasa_prizeWon", JSON.stringify(win));
-                setTimeout(() => {
-                  showPrize(win);
-                }, 300);
-                els.spinButton.innerText = "🔒 JÁ GIROU";
-                els.spinButton.style.backgroundColor = "#9ca3af";
-              }
-              updateCartUI();
-            }, 5000);
-          });
+             { text: "R$ 5 OFF", type: "discount_fixed", value: 5.0 },
+             { text: "TENTE DE NOVO", type: "no_prize", value: 0 },
+             { text: "FRETE GRÁTIS", type: "free_shipping", value: 0 },
+             { text: "10% OFF", type: "discount_percent", value: 0.1 },
+             { text: "NADA AQUI", type: "no_prize", value: 0 },
+             { text: "R$ 5 OFF", type: "discount_fixed", value: 5.0 },
+             { text: "TENTE DE NOVO", type: "no_prize", value: 0 },
+             { text: "FRETE GRÁTIS", type: "free_shipping", value: 0 },
+             { text: "10% OFF", type: "discount_percent", value: 0.1 },
+             { text: "NADA AQUI", type: "no_prize", value: 0 },
+             { text: "R$ 5 OFF", type: "discount_fixed", value: 5.0 },
+             { text: "TENTE DE NOVO", type: "no_prize", value: 0 },
+           ];
+           const colors = ['#121212', '#facc15'];
+           const centerX = canvas.width / 2;
+           const centerY = canvas.height / 2;
+           const radius = canvas.width / 2;
+           const numSegments = prizes.length;
+           const segmentAngle = (Math.PI * 2) / numSegments;
+
+           function drawWheel() {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.textBaseline = 'middle';
+
+              prizes.forEach((prize, i) => {
+                 const startAngle = i * segmentAngle;
+                 const endAngle = (i + 1) * segmentAngle;
+                 const segmentColor = colors[i % colors.length];
+
+                 ctx.save();
+                 ctx.beginPath(); ctx.fillStyle = segmentColor; ctx.moveTo(centerX, centerY);
+                 ctx.arc(centerX, centerY, radius, startAngle, endAngle); ctx.closePath(); ctx.fill();
+
+                 ctx.save(); ctx.translate(centerX, centerY); ctx.rotate(startAngle + (segmentAngle / 2));
+                 ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                 ctx.fillStyle = (i % 2 === 0) ? '#ffffff' : '#121212';
+                 ctx.font = 'bold 11px Arial';
+                 ctx.fillText(prize.text, radius * 0.60, 0);
+                 ctx.restore(); ctx.restore();
+              });
+
+              ctx.beginPath(); ctx.fillStyle = '#facc15'; ctx.arc(centerX, centerY, 25, 0, Math.PI * 2); ctx.fill();
+              ctx.beginPath(); ctx.fillStyle = '#fff7d0'; ctx.arc(centerX, centerY, 15, 0, Math.PI * 2); ctx.fill();
+           }
+           drawWheel();
+
+           let spinning = false;
+           els.spinButton.addEventListener('click', () => {
+              if(spinning) return;
+              spinning = true;
+              els.spinButton.innerText = "GIRANDO...";
+              els.spinButton.disabled = true;
+              
+              const rot = 3600 + Math.random() * 360;
+              canvas.style.transition = "transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)";
+              canvas.style.transform = `rotate(${rot}deg)`;
+              
+              localStorage.setItem('lacasa_hasSpun', 'true');
+              els.spinnerBanner.classList.add('hidden');
+
+              setTimeout(() => {
+                 spinning = false;
+                 const actual = rot % 360;
+                 const index = Math.floor(((270 - actual + 360) % 360) / (360/prizes.length));
+                 const win = prizes[index];
+                 
+                 closeModal(els.spinnerModal);
+                 
+                 if(win.type === 'no_prize') {
+                    alert(`Você ganhou: ${win.text}`);
+                    // Libera botão para tentar de novo
+                    els.spinButton.disabled = false;
+                    els.spinButton.innerText = "GIRAR AGORA!";
+                    openModal(els.spinnerModal);
+                 } else {
+                    // Ganhou prêmio real
+                    activeDiscount = win;
+                    localStorage.setItem('lacasa_prizeWon', JSON.stringify(win));
+                    
+                    // IMPORTANTE: Chamada explícita para abrir modal de prêmio
+                    setTimeout(() => {
+                       showPrize(win);
+                    }, 300);
+                    
+                    // Bloqueia botão
+                    els.spinButton.innerText = "🔒 JÁ GIROU";
+                    els.spinButton.style.backgroundColor = "#9ca3af";
+                 }
+                 updateCartUI();
+              }, 5000);
+           });
         }
 
-        if (localStorage.getItem("lacasa_hasSpun") === "true") {
-          els.spinnerBanner.classList.add("hidden");
-          const saved = localStorage.getItem("lacasa_prizeWon");
-          if (saved) activeDiscount = JSON.parse(saved);
+        // Init Check
+        if(localStorage.getItem('lacasa_hasSpun') === 'true') {
+           els.spinnerBanner.classList.add('hidden');
+           const saved = localStorage.getItem('lacasa_prizeWon');
+           if(saved) activeDiscount = JSON.parse(saved);
         }
 
+        // Fake Purchase
+        const fakeNames = ["Ana", "Bruno", "Carla", "Daniel", "Eduarda", "Felipe", "Gabriela", "Henrique", "Isabela", "João", "Karina", "Lucas", "Mariana", "Nicolas", "Olivia", "Pedro", "Rafaela", "Samuel", "Tatiane", "Vitor"];
+        function showFakePurchase() {
+          const notification = document.getElementById('fake-purchase-notification');
+          if (!notification) return;
+          const randomName = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+          const randomItem = menuItems[Math.floor(Math.random() * menuItems.length)];
+          document.getElementById('fake-text').innerHTML = `<span class="font-bold text-yellow-400 font-anton tracking-wide">${randomName}</span> acabou de comprar <br><span class="font-bold text-white">${randomItem.name}</span>`;
+          notification.classList.remove('-translate-x-full');
+          setTimeout(() => {
+            notification.classList.add('-translate-x-full');
+          }, 4000);
+        }
+        setTimeout(() => {
+          showFakePurchase();
+          setInterval(() => {
+            if (Math.random() > 0.3) showFakePurchase(); 
+          }, 15000); 
+        }, 5000);
+
+        // Start
         renderMenu();
         updateCartUI();
       });

@@ -426,7 +426,12 @@
 
     <!-- MODAL ROLETA -->
     <div id="spinner-modal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300 z-[1000]">
-      <div class="bg-black rounded-xl border-2 border-yellow-400 p-6 w-full max-w-md text-center transform scale-95 transition-transform duration-300 modal-content">
+      <div class="bg-black rounded-xl border-2 border-yellow-400 p-6 w-full max-w-md text-center transform scale-95 transition-transform duration-300 modal-content relative">
+        <!-- Botão X para fechar -->
+        <button id="close-spinner-btn" class="absolute top-3 right-3 text-gray-400 hover:text-white z-10 bg-gray-800 rounded-full p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
         <h2 class="font-anton text-4xl text-yellow-500 mb-2">ROLETA PREMIADA</h2>
         <div class="wheel-container">
           <div class="wheel-pointer"></div>
@@ -519,6 +524,7 @@
           btnCloseCheckout: document.getElementById('btn-close-checkout'),
           btnClaimPrize: document.getElementById('closeModal'), // Corrigido ID
           spinButton: document.getElementById('spinButton'),
+          closeSpinnerBtn: document.getElementById('close-spinner-btn'), // Botão X da roleta
           notification: document.getElementById('notification'),
           
           // Checkout Form Elements
@@ -759,7 +765,7 @@
            msg += `*TOTAL A PAGAR: ${els.modalTotal.innerText}*\n`;
            msg += `==========================`;
 
-           const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
+           const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(msg)}`;
            window.open(url, '_blank');
            
            // Limpa e fecha
@@ -777,6 +783,11 @@
            showCart(); 
            expandCart();
         });
+        
+        // Botão Fechar Roleta (X)
+        if(els.closeSpinnerBtn) {
+           els.closeSpinnerBtn.addEventListener('click', () => closeModal(els.spinnerModal));
+        }
 
         // Reset Dev
         const resetBtn = document.getElementById('reset-roulette-btn');
@@ -835,6 +846,49 @@
            }
            drawWheel();
 
+           // -----------------------------------------------------------------
+           // LÓGICA DE 24 HORAS E BLOQUEIO
+           // -----------------------------------------------------------------
+           const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+           
+           // Função para atualizar o estado do botão da roleta
+           function updateSpinButtonState() {
+              const lastSpin = localStorage.getItem('lacasa_lastSpinTime');
+              
+              // Só bloqueia se existir lastSpin E não for uma "segunda chance"
+              if (lastSpin && (Date.now() - parseInt(lastSpin) < ONE_DAY_MS)) {
+                 // Ainda está bloqueado
+                 els.spinButton.disabled = true;
+                 els.spinButton.innerText = "🔒 VOCÊ JÁ GIROU";
+                 els.spinButton.style.backgroundColor = "#4b5563"; // Cinza escuro
+                 els.spinButton.style.cursor = "not-allowed";
+                 
+                 // Mantém o prêmio anterior se existir (para aplicar no checkout)
+                 const savedPrize = localStorage.getItem('lacasa_prizeWon');
+                 if(savedPrize && savedPrize !== 'null') {
+                    activeDiscount = JSON.parse(savedPrize);
+                    updateCartUI();
+                 }
+              } else {
+                 // Desbloqueado (passou 24h, nunca girou ou ganhou segunda chance)
+                 els.spinButton.disabled = false;
+                 els.spinButton.innerText = "GIRAR AGORA!";
+                 els.spinButton.style.backgroundColor = "#dc2626"; // Vermelho original
+                 els.spinButton.style.cursor = "pointer";
+                 
+                 // Se passou 24h, limpa prêmio antigo
+                 if (lastSpin && (Date.now() - parseInt(lastSpin) >= ONE_DAY_MS)) {
+                    localStorage.removeItem('lacasa_prizeWon');
+                    localStorage.removeItem('lacasa_lastSpinTime');
+                    activeDiscount = null;
+                    updateCartUI();
+                 }
+              }
+           }
+
+           // Chama ao carregar
+           updateSpinButtonState();
+
            let spinning = false;
            els.spinButton.addEventListener('click', () => {
               if(spinning) return;
@@ -846,36 +900,58 @@
               canvas.style.transition = "transform 5s cubic-bezier(0.25, 0.1, 0.25, 1)";
               canvas.style.transform = `rotate(${rot}deg)`;
               
-              localStorage.setItem('lacasa_hasSpun', 'true');
-              els.spinnerBanner.classList.add('hidden');
+              // Mantém banner visível (Requisito 1)
+              // els.spinnerBanner.classList.add('hidden'); // REMOVIDO
 
               setTimeout(() => {
                  spinning = false;
                  const actual = rot % 360;
                  const index = Math.floor(((270 - actual + 360) % 360) / (360/prizes.length));
-                 const win = prizes[index];
+                 let win = prizes[index];
+
+                 // Lógica de Jackpot Falso (Impossível)
+                 if (win.type === 'jackpot_fake') {
+                    // Se cair no Jackpot, força para "TENTE DE NOVO" (índice 1 ou qualquer outro "no_prize")
+                    // Como visualmente já parou, o ideal seria recalcular a rotação antes.
+                    // Mas como fallback de segurança, tratamos como "no_prize" e mostramos mensagem de "Quase!"
+                 }
                  
                  closeModal(els.spinnerModal);
                  
-                 if(win.type === 'no_prize') {
-                    alert(`Você ganhou: ${win.text}`);
-                    // Libera botão para tentar de novo
+                 if(win.type === 'no_prize' || win.type === 'jackpot_fake') {
+                    if (win.type === 'jackpot_fake') {
+                        alert("Uau! Foi por pouco! O Jackpot escapou. Tente novamente!");
+                    } else {
+                        alert(`O resultado foi: ${win.text}`);
+                    }
+                    
+                    // REGRA DE SEGUNDA CHANCE:
+                    // Se cair em "Tente de Novo" ou "Nada Aqui" ou "Jackpot Fake",
+                    // NÃO salvamos o horário (não bloqueia).
+                    // Apenas liberamos o botão novamente.
+                    
                     els.spinButton.disabled = false;
                     els.spinButton.innerText = "GIRAR AGORA!";
+                    els.spinButton.style.backgroundColor = "#dc2626";
+                    els.spinButton.style.cursor = "pointer";
+                    
+                    // Reabre para tentar de novo
                     openModal(els.spinnerModal);
+
                  } else {
-                    // Ganhou prêmio real
+                    // GANHOU PRÊMIO REAL
+                    // Agora sim, bloqueia por 24h
+                    localStorage.setItem('lacasa_lastSpinTime', Date.now().toString());
+                    
                     activeDiscount = win;
                     localStorage.setItem('lacasa_prizeWon', JSON.stringify(win));
                     
-                    // IMPORTANTE: Chamada explícita para abrir modal de prêmio
+                    // Abre modal de prêmio
                     setTimeout(() => {
                        showPrize(win);
                     }, 300);
                     
-                    // Bloqueia botão
-                    els.spinButton.innerText = "🔒 JÁ GIROU";
-                    els.spinButton.style.backgroundColor = "#9ca3af";
+                    updateSpinButtonState();
                  }
                  updateCartUI();
               }, 5000);
@@ -883,11 +959,9 @@
         }
 
         // Init Check
-        if(localStorage.getItem('lacasa_hasSpun') === 'true') {
-           els.spinnerBanner.classList.add('hidden');
-           const saved = localStorage.getItem('lacasa_prizeWon');
-           if(saved) activeDiscount = JSON.parse(saved);
-        }
+        // (Removida lógica antiga de 'lacasa_hasSpun' simples, agora usa timestamp)
+        const saved = localStorage.getItem('lacasa_prizeWon');
+        if(saved && saved !== 'null') activeDiscount = JSON.parse(saved);
 
         // Fake Purchase
         const fakeNames = ["Ana", "Bruno", "Carla", "Daniel", "Eduarda", "Felipe", "Gabriela", "Henrique", "Isabela", "João", "Karina", "Lucas", "Mariana", "Nicolas", "Olivia", "Pedro", "Rafaela", "Samuel", "Tatiane", "Vitor"];
